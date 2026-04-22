@@ -1,18 +1,21 @@
 ---
 name: atom-wiki
 description: >
-  Guides AI Agents to build and query an atomized knowledge base from raw documents.
-  Atomization means breaking documents into the smallest self-contained, meaningful
-  knowledge units (atomic notes), each stored as an independent markdown file with
-  metadata, tags, and cross-references. When new documents arrive, the agent reads,
-  extracts, classifies, and integrates atomic units into the wiki — updating existing
-  pages, flagging contradictions, and strengthening synthesis. When the user asks
-  questions, the agent searches the knowledge base, assembles relevant atoms, and
+  Guides AI Agents to initialize, build, and query an atomized knowledge base from
+  raw documents. Initialization creates a wiki directory structure with raw/, atoms/
+  (entities, concepts, facts, how-to, cases, comparisons, qa, synthesis), index.md,
+  log.md, and an AGENTS.md file at the project root that always directs agents to use
+  this skill. Atomization means breaking documents into the smallest self-contained,
+  meaningful knowledge units (atomic notes), each stored as an independent markdown
+  file with metadata, tags, and cross-references. When new documents arrive, the agent
+  reads, extracts, classifies, and integrates atomic units into the wiki — updating
+  existing pages, flagging contradictions, and strengthening synthesis. When the user
+  asks questions, the agent searches the knowledge base, assembles relevant atoms, and
   synthesizes answers with citations. Use this skill whenever the user mentions
   "atom wiki", "atomized knowledge", "knowledge base", "知识库", "原子化",
-  "整理文档", "拆分文档", "归类文档", "build wiki", "ingest document",
-  "answer from wiki", or wants to organize, split, categorize, or query a
-  structured knowledge base from their documents.
+  "整理文档", "拆分文档", "归类文档", "build wiki", "initialize wiki", "初始化知识库",
+  "create wiki", "ingest document", "answer from wiki", or wants to organize, split,
+  categorize, or query a structured knowledge base from their documents.
 version: 0.1.0
 ---
 
@@ -62,7 +65,20 @@ related: [[other-atom]], [[another-atom]]
 
 **Core rules**: one idea per atom, self-contained (makes sense alone), concise (50-300 words), tagged and categorized.
 
-## Three Operations
+## Four Operations
+
+### 0. Initialize — Create Wiki Structure
+
+**Trigger**: User asks to create, initialize, bootstrap, or set up a wiki/knowledge base. Also triggers automatically when the first atomize operation is requested but no wiki structure exists yet.
+
+**Steps** (full protocol: [references/bootstrap.md](references/bootstrap.md)):
+
+1. **Determine root directory** — Use user-specified path or current working directory
+2. **Create directory structure** — raw/, atoms/ (8 subdirectories), index.md, log.md
+3. **Create AGENTS.md** — At project root, with wiki path, structure, and explicit instruction to always use the atom-wiki skill
+4. **Seed index.md and log.md** — Empty index template, initialization log entry
+
+The AGENTS.md file is the persistent entry point: any AI agent opening this project will read it and know to load the atom-wiki skill for all wiki operations.
 
 ### 1. Atomize — Document Processing
 

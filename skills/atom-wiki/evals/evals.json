@@ -113,5 +113,49 @@
         }
       ]
     }
+    {
+      "id": 4,
+      "prompt": "在 /tmp/atom-wiki-init-eval/ 目录下初始化一个空白的 atom-wiki 知识库。这个知识库将用于记录「机器学习算法学习笔记」相关的知识。初始化后在项目根目录创建 AGENTS.md 文件。",
+      "expected_output": "在 /tmp/atom-wiki-init-eval/ 下创建完整的 wiki 目录结构（raw/ 及子目录、atoms/ 及 8 个子目录、index.md、log.md），并在项目根目录创建 AGENTS.md 文件，其中包含 wiki 路径、目录结构说明、以及始终引导使用 atom-wiki skill 的指令",
+      "files": [],
+      "assertions": [
+        {
+          "name": "wiki-root-directory",
+          "text": "在 /tmp/atom-wiki-init-eval/ 下创建了 wiki 目录结构"
+        },
+        {
+          "name": "raw-directory-exists",
+          "text": "raw/ 目录存在"
+        },
+        {
+          "name": "atoms-subdirectories",
+          "text": "atoms/ 下包含 8 个子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）"
+        },
+        {
+          "name": "index-md-seeded",
+          "text": "index.md 存在且包含所有 type 分区的表头"
+        },
+        {
+          "name": "log-md-init-entry",
+          "text": "log.md 存在且包含初始化操作条目"
+        },
+        {
+          "name": "agents-md-created",
+          "text": "在项目根目录创建了 AGENTS.md 文件"
+        },
+        {
+          "name": "agents-md-contains-wiki-path",
+          "text": "AGENTS.md 中包含了 wiki 的路径信息（/tmp/atom-wiki-init-eval/ 或相对路径）"
+        },
+        {
+          "name": "agents-md-directs-to-skill",
+          "text": "AGENTS.md 中明确引导使用 atom-wiki skill"
+        },
+        {
+          "name": "agents-md-lists-directories",
+          "text": "AGENTS.md 中列出了 wiki 的目录结构（raw/、atoms/ 等）"
+        }
+      ]
+    }
   ]
 }
