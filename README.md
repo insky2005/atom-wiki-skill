@@ -92,6 +92,12 @@ wiki/
 
 ```bash
 npx skills add https://github.com/insky2005/atom-wiki-skill --skill atom-wiki
+
+# 全局安装（可选择 Agent）
+npx skills add https://github.com/insky2005/atom-wiki-skill --skill atom-wiki --global
+
+# 全局安装至所有 Agent
+npx skills add https://github.com/insky2005/atom-wiki-skill --skill atom-wiki --agent '*' --global
 ```
 
 ### 方式二：手动安装
