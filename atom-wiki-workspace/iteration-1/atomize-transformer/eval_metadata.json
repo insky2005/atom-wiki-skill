@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "atomize-transformer",
+  "prompt": "请阅读 transformer-overview.md 这篇文档，将其原子化拆分到知识库中。在 /tmp/atom-wiki-eval-1/ 目录下创建完整的 wiki 目录结构（包括 raw/, atoms/ 各子目录, index.md, log.md），把源文件复制到 raw/ 目录，然后按照 atom-wiki 的协议拆分为原子化知识单元。",
+  "assertions": []
+}

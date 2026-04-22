@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "skill_name": "atom-wiki",
+    "skill_path": "/Users/loie/c/work.ai/wiki/wiki-qoder/skills/atom-wiki",
+    "executor_model": "claude-sonnet-4-20250514",
+    "analyzer_model": "claude-sonnet-4-20250514",
+    "timestamp": "2026-04-21T09:45:00Z",
+    "evals_run": ["atomize-transformer", "query-comparison", "atomize-efficient"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "atomize-transformer",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 120,
+        "tokens": 45000,
+        "tool_calls": 30,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "创建了完整的 wiki 目录结构", "passed": true, "evidence": "All 8 required subdirectories exist under atoms/"},
+        {"text": "源文件被复制到 raw/ 目录", "passed": true, "evidence": "raw/transformer-overview.md exists with full content"},
+        {"text": "至少创建 8 个原子化知识单元", "passed": true, "evidence": "11 atoms created: 1 entity, 5 concepts, 4 facts, 1 comparison"},
+        {"text": "每个 atom 含完整 YAML frontmatter", "passed": true, "evidence": "All 11 files contain all 7 required YAML fields"},
+        {"text": "atom 中文内容，YAML 键英文", "passed": true, "evidence": "All content in Chinese, all keys in English"},
+        {"text": "存在 concept 类型 atom", "passed": true, "evidence": "5 concept atoms: self-attention, multi-head-attention, positional-encoding, encoder-decoder, feed-forward"},
+        {"text": "存在 entity 类型 atom", "passed": true, "evidence": "entities/transformer.md covers Transformer architecture"},
+        {"text": "index.md 按 type 分区列出", "passed": true, "evidence": "All 8 type sections with table format, all 11 atoms listed"},
+        {"text": "log.md 包含 atomize 条目", "passed": true, "evidence": "## [2026-04-21] atomize | Transformer 架构概述 with full breakdown"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "atomize-transformer",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.44,
+        "passed": 4,
+        "failed": 5,
+        "total": 9,
+        "time_seconds": 90,
+        "tokens": 35000,
+        "tool_calls": 22,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "创建了完整的 wiki 目录结构", "passed": false, "evidence": "Used sources/ instead of raw/, atoms/ flat without subdirectories"},
+        {"text": "源文件被复制到 raw/ 目录", "passed": false, "evidence": "Copied to sources/ not raw/"},
+        {"text": "至少创建 8 个原子化知识单元", "passed": true, "evidence": "9 atoms created"},
+        {"text": "每个 atom 含完整 YAML frontmatter", "passed": false, "evidence": "Uses 'source' (singular) instead of 'sources' (plural)"},
+        {"text": "atom 中文内容，YAML 键英文", "passed": true, "evidence": "Content in Chinese, YAML keys in English"},
+        {"text": "存在 concept 类型 atom", "passed": true, "evidence": "5 concept atoms created"},
+        {"text": "存在 entity 类型 atom", "passed": true, "evidence": "1 entity atom created"},
+        {"text": "index.md 按 type 分区列出", "passed": false, "evidence": "Format correct but uses Chinese section headers instead of English"},
+        {"text": "log.md 包含 atomize 条目", "passed": false, "evidence": "Format: ### 2026-04-21 — 文档原子化操作, not ## [date] atomize | {title}"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "query-comparison",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.83,
+        "passed": 5,
+        "failed": 1,
+        "total": 6,
+        "time_seconds": 80,
+        "tokens": 32000,
+        "tool_calls": 25,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "回答引用知识库 atom", "passed": true, "evidence": "4 distinct atoms cited: self-attention-mechanism.md, transformer-vs-rnn.md, self-attention-o2-complexity.md, positional-encoding.md"},
+        {"text": "包含自注意力优势", "passed": true, "evidence": "Direct long-range modeling, parallel training, O(1) gradient path"},
+        {"text": "包含 RNN 劣势", "passed": true, "evidence": "Gradient vanishing, sequential computation, information decay"},
+        {"text": "包含置信度说明", "passed": true, "evidence": "置信度：高 with reasoning"},
+        {"text": "有价值的分析回存为 atom", "passed": false, "evidence": "No new atoms created; existing comparison atom already covered the topic"},
+        {"text": "index.md 和 log.md 更新", "passed": true, "evidence": "log.md has query-filed entry; index.md already had the existing atom"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "query-comparison",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 3,
+        "failed": 3,
+        "total": 6,
+        "time_seconds": 45,
+        "tokens": 18000,
+        "tool_calls": 12,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "回答引用知识库 atom", "passed": false, "evidence": "Explicitly stated KB path does not exist, no atoms cited"},
+        {"text": "包含自注意力优势", "passed": true, "evidence": "O(1) path length, global receptive field, parallel computation"},
+        {"text": "包含 RNN 劣势", "passed": true, "evidence": "O(n) path length, gradient vanishing, sequential dependency"},
+        {"text": "包含置信度说明", "passed": false, "evidence": "No confidence level anywhere in the answer"},
+        {"text": "有价值的分析回存为 atom", "passed": false, "evidence": "No new atoms created"},
+        {"text": "index.md 和 log.md 更新", "passed": true, "evidence": "Vacuously true - no new atoms created"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "atomize-efficient",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.86,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 110,
+        "tokens": 40000,
+        "tool_calls": 35,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "第二篇文档复制到 raw/", "passed": true, "evidence": "raw/efficient-transformers.md exists"},
+        {"text": "创建 Linformer/Reformer/Performer/Flash Attention atom", "passed": true, "evidence": "All 4 concept atoms created with proper frontmatter"},
+        {"text": "已有 atom 被更新", "passed": true, "evidence": "self-attention-o2-complexity.md, transformer.md, self-attention-mechanism.md updated with new source"},
+        {"text": "矛盾处有 CONTRADICTION 块", "passed": true, "evidence": "Two atoms have CONTRADICTION blocks: self-attention-o2-complexity.md and on2-not-always-bottleneck.md"},
+        {"text": "CONTRADICTION 有双方主张和 Resolution", "passed": true, "evidence": "Both blocks contain claims from both sources and Resolution: both valid in different contexts"},
+        {"text": "创建了 comparison 类型 atom", "passed": true, "evidence": "efficient-transformers-comparison.md with table of all 4 methods"},
+        {"text": "index.md 和 log.md 更新", "passed": false, "evidence": "log.md correct, but index.md missing efficient-transformers-comparison.md in Comparisons section"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "atomize-efficient",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.43,
+        "passed": 3,
+        "failed": 4,
+        "total": 7,
+        "time_seconds": 70,
+        "tokens": 28000,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "第二篇文档复制到 raw/", "passed": false, "evidence": "No raw/ directory; efficient-transformers.md not preserved"},
+        {"text": "创建 Linformer/Reformer/Performer/Flash Attention atom", "passed": true, "evidence": "All 4 atoms created"},
+        {"text": "已有 atom 被更新", "passed": false, "evidence": "sources fields not updated to include efficient-transformers.md"},
+        {"text": "矛盾处有 CONTRADICTION 块", "passed": true, "evidence": "on2-complexity-debate.md is dedicated contradiction record"},
+        {"text": "CONTRADICTION 有双方主张和 Resolution", "passed": true, "evidence": "Both sources documented with reconciliation"},
+        {"text": "创建了 comparison 类型 atom", "passed": true, "evidence": "efficient-transformer-comparison.md with table"},
+        {"text": "index.md 和 log.md 更新", "passed": false, "evidence": "Root index.md stale; only index/INDEX.md updated"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.90, "stddev": 0.08, "min": 0.83, "max": 1.0},
+      "time_seconds": {"mean": 103.3, "stddev": 20.8, "min": 80.0, "max": 120.0},
+      "tokens": {"mean": 39000, "stddev": 6557, "min": 32000, "max": 45000}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.46, "stddev": 0.05, "min": 0.43, "max": 0.50},
+      "time_seconds": {"mean": 68.3, "stddev": 22.5, "min": 45.0, "max": 90.0},
+      "tokens": {"mean": 27000, "stddev": 8660, "min": 18000, "max": 35000}
+    },
+    "delta": {
+      "pass_rate": "+0.44",
+      "time_seconds": "+35.0",
+      "tokens": "+12000"
+    }
+  },
+  "notes": [
+    "Skill shows consistent advantage across all 3 evals: +44% average pass rate improvement",
+    "Eval 1 (atomize-transformer) shows the largest gap: 100% with skill vs 44% without — skill enforces directory structure, naming conventions, and log format",
+    "Eval 2 (query-comparison): with_skill cites atoms (4 citations) and includes confidence statement; without_skill ignores the knowledge base entirely and writes from general knowledge",
+    "Eval 3 (atomize-efficient): with_skill properly handles contradictions (2 CONTRADICTION blocks with Resolution); without_skill finds contradictions but fails to update existing atom source fields",
+    "Common failure mode with_skill: assertion 5 (file new atoms) fails when relevant atom already exists — the agent doesn't detect it needs to update rather than create",
+    "Common failure mode with_skill: index.md occasionally misses newly created atoms (eval 3 — comparison atom missing from index)",
+    "Without-skill consistently fails on: source field naming (source vs sources), directory conventions (sources/ vs raw/), log format specification, and not using the knowledge base at all for queries",
+    "The +35s time overhead and +12K token cost for the skill is justified by the significant quality improvement (44% higher pass rate)"
+  ]
+}

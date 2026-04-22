@@ -1,0 +1,74 @@
+{
+  "eval_name": "query-comparison",
+  "eval_prompt": "基于上一轮已经构建的知识库（/tmp/atom-wiki-eval-1/），回答问题：自注意力机制和循环神经网络在处理长距离依赖时各有什么优劣势？",
+  "answer_file": "outputs/answer-self-attention-vs-rnn-long-range.md",
+  "assertions": {
+    "1_atom_citations": {
+      "description": "回答中引用了知识库中的 atom（通过文件路径或标题引用）",
+      "pass": true,
+      "details": "The answer includes multiple inline citations linking to atoms in the knowledge base: atoms/concepts/self-attention-mechanism.md, atoms/comparisons/transformer-vs-rnn.md, atoms/facts/self-attention-o2-complexity.md, atoms/concepts/positional-encoding.md. At least 4 distinct atoms are cited.",
+      "evidence": [
+        "([自注意力机制（Self-Attention）](atoms/concepts/self-attention-mechanism.md))",
+        "([Transformer 与 RNN 的对比](atoms/comparisons/transformer-vs-rnn.md))",
+        "([自注意力的 O(n^2) 计算复杂度](atoms/facts/self-attention-o2-complexity.md))",
+        "([位置编码（Positional Encoding）](atoms/concepts/positional-encoding.md))"
+      ]
+    },
+    "2_self_attention_advantages": {
+      "description": "回答包含自注意力机制的优势（如并行计算、直接关注远距离位置）",
+      "pass": true,
+      "details": "The answer comprehensively covers self-attention advantages: direct long-range modeling (一步可达), parallel training (并行训练/GPU充分利用), short gradient path (O(1) gradient propagation avoiding vanishing gradients). All key advantages are present and well-explained.",
+      "evidence": [
+        "直接长距离建模：自注意力机制使模型能够直接关注序列中任意位置",
+        "并行训练：所有位置同时处理，可充分利用现代硬件加速器",
+        "梯度路径短：梯度传播路径长度为 O(1)，有效缓解了 RNN 中常见的梯度消失问题"
+      ]
+    },
+    "3_rnn_disadvantages": {
+      "description": "回答包含循环神经网络的劣势（如梯度消失、串行计算）",
+      "pass": true,
+      "details": "The answer thoroughly covers RNN disadvantages: gradient vanishing (梯度消失问题), sequential computation limiting parallelization (顺序依赖限制了并行化), and long-range information decay (长距离信息衰减). All key disadvantages are present.",
+      "evidence": [
+        "梯度消失问题：信息通过隐藏状态逐层传递，长距离依赖的梯度在反向传播时容易消失或爆炸",
+        "训练速度慢：顺序依赖限制了并行化，无法充分利用 GPU 的并行计算能力",
+        "长距离信息衰减：即使使用 LSTM/GRU 等变体缓解梯度问题，信息在长距离传递过程中仍会有一定程度的衰减"
+      ]
+    },
+    "4_confidence_statement": {
+      "description": "回答包含置信度说明（如 high/medium/low confidence）",
+      "pass": true,
+      "details": "The answer includes an explicit confidence statement '置信度：高' (High confidence) with reasoning: based on 4 atom files from the knowledge base, all sources consistent (all derived from transformer-overview.md), no contradictions found.",
+      "evidence": [
+        "置信度：高",
+        "本答案基于知识库中 4 个原子文件的综合信息，涵盖自注意力机制原理、计算复杂度、Transformer 与 RNN 的多维度对比，以及位置编码的设计考量。所有信息来源一致（均源自 transformer-overview.md），未发现矛盾。"
+      ]
+    },
+    "5_new_atoms_created": {
+      "description": "有价值的分析被回存为新的 atom，type 为 comparison 或 synthesis",
+      "pass": false,
+      "details": "No NEW atoms were created during this query execution. The comparison atom 'self-attention-vs-rnn-long-range.md' and the synthesis atom 'on2-not-always-bottleneck.md' both already existed in the original wiki at /tmp/atom-wiki-eval-1/ before this query was run. The answer produced a high-quality comparative analysis, but it was not persisted back as new atoms. The answer itself is comprehensive enough that it could have been atomized into new comparison/synthesis atoms.",
+      "evidence": {
+        "pre_existing_comparison": "atoms/comparisons/self-attention-vs-rnn-long-range.md existed in /tmp/atom-wiki-eval-1/ before this eval",
+        "pre_existing_synthesis": "atoms/synthesis/on2-not-always-bottleneck.md existed in /tmp/atom-wiki-eval-1/ before this eval",
+        "files_identical": "The eval-state versions of these files are identical to the originals - no updates were made"
+      }
+    },
+    "6_index_log_updated": {
+      "description": "如果创建了新 atom，index.md 和 log.md 相应更新",
+      "pass": true,
+      "details": "Since no new atoms were created, this assertion is vacuously satisfied. However, the system did record the query in log.md with a 'query-filed' entry documenting the question and linking to the related existing comparison atom. The index.md already contained the existing comparison atom entry. Note: the updated index.md appears to have lost some entries present in the original (flash-attention.md, linformer.md, performer.md, reformer.md concepts; efficient-transformers-comparison.md comparison), suggesting the wiki state may have been derived from an earlier snapshot rather than the full /tmp/atom-wiki-eval-1/ state.",
+      "evidence": {
+        "log_entry": "[2026-04-22] query-filed | 自注意力机制与 RNN 在长距离依赖处理上的对比 - Question recorded with filed path and related atoms",
+        "index_missing_entries": "Updated index.md is missing entries that exist in original: flash-attention, linformer, performer, reformer concepts; efficient-transformers-comparison; on2-not-always-bottleneck synthesis entry",
+        "note": "This suggests the wiki snapshot used for the query was from an earlier point (after transformer-overview atomization but before efficient-transformers atomization)"
+      }
+    }
+  },
+  "summary": {
+    "total_assertions": 6,
+    "passed": 5,
+    "failed": 1,
+    "score": "5/6",
+    "assessment": "The answer quality is excellent: it provides thorough comparative analysis with proper citations, covers all required advantages and disadvantages, includes confidence assessment with reasoning, and identifies knowledge gaps. The main failure is on assertion 5 - no new atoms were created from the valuable analysis. The answer's comparison table, detailed advantages/disadvantages sections, and synthesis about quality-vs-efficiency tradeoff represent content that should have been persisted as new comparison/synthesis atoms. Additionally, there is an inconsistency in the wiki state: the eval-state snapshot appears to be from before the efficient-transformers.md atomization round (missing several atoms and synthesis entry that existed in /tmp/atom-wiki-eval-1/), which may have prevented the system from recognizing that the comparison atom already existed."
+  }
+}

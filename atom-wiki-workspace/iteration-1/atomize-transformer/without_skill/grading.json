@@ -1,0 +1,63 @@
+{
+  "eval": "atomize-transformer (without skill)",
+  "assertions": {
+    "1_directory_structure": {
+      "description": "创建了完整的 wiki 目录结构，包含 raw/、atoms/ 及其子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）",
+      "pass": false,
+      "evidence": "实际目录结构为 sources/（而非 raw/）和 atoms/（无子目录）。atoms/ 下所有 9 个 .md 文件直接平铺，未按 entities、concepts、facts 等子目录分类组织。缺少 entities、concepts、facts、how-to、cases、comparisons、qa、synthesis 这些子目录。",
+      "score": 0.2
+    },
+    "2_source_copied": {
+      "description": "源文件被复制到 raw/ 目录",
+      "pass": false,
+      "evidence": "源文件被复制到 sources/transformer-overview.md，而非 raw/ 目录。目录名不符合要求。",
+      "score": 0.3
+    },
+    "3_at_least_8_atoms": {
+      "description": "至少创建了 8 个原子化知识单元文件（.md）",
+      "pass": true,
+      "evidence": "实际创建了 9 个 atom 文件：transformer-architecture.md、self-attention-mechanism.md、multi-head-attention.md、positional-encoding.md、encoder-decoder-structure.md、feed-forward-network.md、attention-is-all-you-need-paper.md、transformer-impact.md、transformer-limitations.md。满足 >=8 的要求。",
+      "score": 1.0
+    },
+    "4_yaml_frontmatter": {
+      "description": "每个 atom 文件包含完整的 YAML frontmatter（title、type、created、updated、sources、tags、related）",
+      "pass": false,
+      "evidence": "所有 9 个 atom 文件都有 YAML frontmatter，包含 title、type、created、updated、tags、related。但键名为 'source'（单数）而非 'sources'（复数），与要求的字段名不完全匹配。此外缺少 'id' 字段（如果有该要求的话）。核心字段基本齐全但字段名有偏差。",
+      "score": 0.7
+    },
+    "5_chinese_content_english_keys": {
+      "description": "atom 内容为中文（跟随源文档语言），而 YAML 键和 type 值为英文",
+      "pass": true,
+      "evidence": "所有 atom 文件的正文内容均为中文。YAML 键名（title、type、created、updated、source、tags、related、source_section）均为英文。type 值（entity、concept、fact、synthesis、comparison）均为英文。完全符合要求。",
+      "score": 1.0
+    },
+    "6_concept_type_atoms": {
+      "description": "存在 concept 类型的 atom（如 self-attention、multi-head-attention、positional-encoding 等概念）",
+      "pass": true,
+      "evidence": "存在 5 个 concept 类型 atom：self-attention-mechanism.md、multi-head-attention.md、positional-encoding.md、feed-forward-network.md、encoder-decoder-structure.md。涵盖了 self-attention、multi-head-attention、positional-encoding 等核心概念。",
+      "score": 1.0
+    },
+    "7_entity_type_atoms": {
+      "description": "存在 entity 类型的 atom（如 Transformer、BERT、GPT 等实体）",
+      "pass": true,
+      "evidence": "存在 1 个 entity 类型 atom：transformer-architecture.md（title: 'Transformer 架构'）。虽然 Transformer 本身被归类为 entity 而非更细粒度的 BERT/GPT，但 entity 类型确实存在且内容合理。",
+      "score": 1.0
+    },
+    "8_index_md": {
+      "description": "index.md 按 type 分区列出所有 atom，使用表格格式",
+      "pass": true,
+      "evidence": "index.md 按 type 分区（实体、概念、事实、综合、比较），每个分区使用表格格式（文件名 | 标题 | 标签）。底部有类型统计表。所有 9 个 atom 均被列出。",
+      "score": 1.0
+    },
+    "9_log_md": {
+      "description": "log.md 包含本次 atomize 操作的条目，格式为 ## [date] atomize | {title}",
+      "pass": false,
+      "evidence": "log.md 确实包含操作记录，但格式不匹配要求。实际使用的是 '### 2026-04-21 — 文档原子化操作' 而非 '## [date] atomize | {title}' 格式。虽然有完整的操作信息（源文档、执行步骤、统计等），但标题格式不符合规范。",
+      "score": 0.5
+    }
+  },
+  "overall_score": 0.69,
+  "total_pass": 4,
+  "total_assertions": 9,
+  "summary": "整体评分：69%（4/9 通过）。主要优点：成功创建了 9 个高质量 atom 文件，内容为中文，frontmatter 包含核心元数据，index.md 和 log.md 都有按 type 分区的内容。主要缺陷：1) 目录结构使用 sources/ 而非 raw/，且 atoms/ 下没有按类型创建子目录；2) frontmatter 中 source 字段名为单数而非要求的 sources；3) log.md 的条目标题格式与规范不完全匹配。"
+}

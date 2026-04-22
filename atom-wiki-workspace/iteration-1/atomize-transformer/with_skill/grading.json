@@ -1,0 +1,60 @@
+{
+  "eval": "atomize-transformer",
+  "iteration": 1,
+  "mode": "with_skill",
+  "assertions": {
+    "1_complete_directory_structure": {
+      "description": "创建了完整的 wiki 目录结构，包含 raw/、atoms/ 及其子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）",
+      "pass": true,
+      "evidence": "All 8 required subdirectories under atoms/ exist: entities/, concepts/, facts/, how-to/, cases/, comparisons/, qa/, synthesis/. The raw/ directory also exists at the top level."
+    },
+    "2_source_file_copied": {
+      "description": "源文件被复制到 raw/ 目录",
+      "pass": true,
+      "evidence": "raw/transformer-overview.md exists and contains the full source document content."
+    },
+    "3_at_least_8_atoms": {
+      "description": "至少创建了 8 个原子化知识单元文件（.md）",
+      "pass": true,
+      "evidence": "11 atom files were created (exceeds the minimum of 8): 1 entity, 5 concepts, 4 facts, 1 comparison.",
+      "count": 11
+    },
+    "4_complete_yaml_frontmatter": {
+      "description": "每个 atom 文件包含完整的 YAML frontmatter（title、type、created、updated、sources、tags、related）",
+      "pass": true,
+      "evidence": "All 11 atom files contain all 7 required YAML fields: title, type, created, updated, sources, tags, related. Verified across entities/transformer.md, concepts/* (5 files), facts/* (4 files), and comparisons/transformer-vs-rnn.md."
+    },
+    "5_chinese_content_english_yaml_keys": {
+      "description": "atom 内容为中文（跟随源文档语言），而 YAML 键和 type 值为英文",
+      "pass": true,
+      "evidence": "All YAML keys are in English (title, type, created, updated, sources, tags, related). All type values are in English (entity, concept, fact, comparison). All body content and title values are in Chinese, matching the source document language."
+    },
+    "6_concept_atoms_exist": {
+      "description": "存在 concept 类型的 atom（如 self-attention、multi-head-attention、positional-encoding 等概念）",
+      "pass": true,
+      "evidence": "5 concept atoms found: concepts/self-attention-mechanism.md, concepts/multi-head-attention.md, concepts/positional-encoding.md, concepts/encoder-decoder-structure.md, concepts/feed-forward-network.md"
+    },
+    "7_entity_atoms_exist": {
+      "description": "存在 entity 类型的 atom（如 Transformer、BERT、GPT 等实体）",
+      "pass": true,
+      "evidence": "1 entity atom found: entities/transformer.md. The entity file covers the Transformer architecture and references BERT, GPT, and T5 as derivative works (in the transformer-milestone-works fact atom)."
+    },
+    "8_index_lists_all_atoms": {
+      "description": "index.md 按 type 分区列出所有 atom，使用表格格式",
+      "pass": true,
+      "evidence": "index.md contains table-formatted sections for all 8 type partitions (Entities, Concepts, Facts, How-to, Cases, Comparisons, Q&A, Synthesis). All 11 created atoms are listed in their respective type sections. Empty sections (How-to, Cases, Q&A, Synthesis) are present with headers but no rows."
+    },
+    "9_log_has_atomize_entry": {
+      "description": "log.md 包含本次 atomize 操作的条目，格式为 ## [date] atomize | {title}",
+      "pass": true,
+      "evidence": "log.md contains: '## [2026-04-21] atomize | Transformer 架构概述' followed by details: source file, 11 atoms created breakdown (1 entity, 5 concepts, 4 facts, 1 comparison), atoms updated: none, contradictions: none."
+    }
+  },
+  "summary": {
+    "total_assertions": 9,
+    "passed": 9,
+    "failed": 0,
+    "score": "9/9",
+    "overall": "PASS"
+  }
+}

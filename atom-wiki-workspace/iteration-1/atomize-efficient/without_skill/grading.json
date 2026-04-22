@@ -1,0 +1,53 @@
+{
+  "eval": "atomize-efficient (without skill)",
+  "iteration": 1,
+  "assertions": {
+    "1_raw_directory": {
+      "description": "第二篇文档被复制到 raw/ 目录",
+      "pass": false,
+      "evidence": "No raw/ directory exists in the outputs. The only directory under outputs/ is sources/, which contains only transformer-overview.md. The efficient-transformers.md source document was not preserved anywhere in the outputs.",
+      "score": 0
+    },
+    "2_new_atoms": {
+      "description": "创建了关于 Linformer、Reformer、Performer、Flash Attention 的新 atom",
+      "pass": true,
+      "evidence": "All four atoms were created: efficient-transformer-linformer.md, efficient-transformer-reformer.md, efficient-transformer-performer.md, efficient-transformer-flash-attention.md. Each contains substantive content about the respective method.",
+      "score": 1
+    },
+    "3_existing_atoms_updated": {
+      "description": "已有的 atom 被更新（sources 字段包含新源文件）",
+      "pass": false,
+      "evidence": "Partial updates occurred but sources fields were NOT updated. transformer-limitations.md was updated with a contradiction block referencing efficient-transformers.md in the body. transformer-self-attention.md got a new cross-reference to on2-complexity-debate. However, the frontmatter source field of transformer-limitations.md still reads 'source: transformer-overview.md' only — efficient-transformers.md is not listed. Similarly, all other existing atoms with frontmatter still only list transformer-overview.md as source. The non-frontmatter atoms (e.g., transformer-self-attention.md) also only list transformer-overview.md in their sources section.",
+      "score": 0.3
+    },
+    "4_contradiction_block_exists": {
+      "description": "对于 O(n^2) 复杂度是否为瓶颈的矛盾，至少有一个 atom 包含 CONTRADICTION 块",
+      "pass": true,
+      "evidence": "on2-complexity-debate.md is a dedicated contradiction record atom. It contains: 矛盾概述 (contradiction overview), 来源一/来源二 (both sources with their positions), 矛盾分析 (contradiction analysis table), 综合判断 (reconciliation). Additionally, transformer-limitations.md has a '矛盾标记' (contradiction marker) section that references the conflict with efficient-transformers.md.",
+      "score": 1
+    },
+    "5_contradiction_has_both_sides_and_resolution": {
+      "description": "CONTRADICTION 块包含双方主张和 Resolution 状态",
+      "pass": true,
+      "evidence": "on2-complexity-debate.md clearly documents both sides: 来源一 (transformer-overview.md: O(n^2) is a main limitation) and 来源二 (efficient-transformers.md: O(n^2) is not a bottleneck for common sequence lengths 512-4096). The 综合判断 section provides a resolution: the two sources are complementary rather than contradictory — O(n^2) is a theoretical limitation, but in practice the bottleneck depends on sequence length, and IO optimization (Flash Attention) is more effective than complexity reduction for common lengths. A 建议 section provides actionable guidance.",
+      "score": 1
+    },
+    "6_comparison_atom": {
+      "description": "创建了 comparison 类型的 atom（四种高效方法的对比）",
+      "pass": true,
+      "evidence": "efficient-transformer-comparison.md exists and contains a comparison table of all four methods (Linformer O(n), Reformer O(n log n), Performer O(n), Flash Attention O(n^2)) with columns for complexity, approximation status, main advantages, and main disadvantages. It also includes key observations about the trade-offs between exact and approximate methods.",
+      "score": 1
+    },
+    "7_index_and_log": {
+      "description": "index.md 反映所有新增和更新的 atom，log.md 包含本次 atomize 操作的条目",
+      "pass": false,
+      "evidence": "SPLIT RESULT: index/INDEX.md is fully updated (21 atoms, 2 source documents, 1 contradiction marker, complete tag cloud). HOWEVER, the root-level index.md is STALE — it still shows only 9 atoms, only transformer-overview.md as source, and makes no mention of efficient-transformers.md, Linformer, Reformer, Performer, Flash Attention, or the contradiction. The log (index/LOG.md) correctly contains entries for all operations including '操作三：原子化第二来源（efficient-transformers.md）' and '操作四：矛盾检测与标记' with detailed descriptions.",
+      "score": 0.5
+    }
+  },
+  "total_score": 3.8,
+  "max_score": 7,
+  "percentage": 54.3,
+  "summary": "The without-skill execution shows strong content quality but structural inconsistencies. Strengths: excellent contradiction detection and resolution (on2-complexity-debate.md is thorough), proper creation of all four efficient transformer atoms, and a well-structured comparison atom. Weaknesses: (1) No raw/ directory for source document preservation, (2) existing atom source fields were not updated to include efficient-transformers.md, (3) the root-level index.md was not updated while index/INDEX.md was — this inconsistency suggests the output may have been a fresh build rather than an incremental update of an existing wiki at /tmp/atom-wiki-eval-1/. The dual set of atoms (e.g., transformer-self-attention.md vs self-attention-mechanism.md) also suggests a rebuild rather than an in-place update.",
+  "grading_date": "2026-04-22"
+}

@@ -1,0 +1,86 @@
+{
+  "eval_name": "atomize-efficient",
+  "eval_description": "Process second document (efficient-transformers.md) on top of existing wiki from iteration 1, handling overlaps and contradictions.",
+  "assertions": [
+    {
+      "id": 1,
+      "assertion": "第二篇文档被复制到 raw/ 目录",
+      "pass": true,
+      "evidence": "File exists at /outputs/eval-state/raw/efficient-transformers.md (31 lines). Contains content about Linformer, Reformer, Performer, Flash Attention, and the comparison table."
+    },
+    {
+      "id": 2,
+      "assertion": "创建了关于 Linformer、Reformer、Performer、Flash Attention 的新 atom",
+      "pass": true,
+      "evidence": "All four concept atoms created: atoms/concepts/linformer.md, atoms/concepts/reformer.md, atoms/concepts/performer.md, atoms/concepts/flash-attention.md. Each has proper frontmatter with type: concept, created/updated dates of 2026-04-22, sources: [efficient-transformers.md], appropriate tags, and related links."
+    },
+    {
+      "id": 3,
+      "assertion": "已有的 atom 被更新（sources 字段包含新源文件）",
+      "pass": true,
+      "evidence": "Multiple existing atoms updated with efficient-transformers.md in sources: (a) atoms/facts/self-attention-o2-complexity.md: sources changed from [transformer-overview.md] to [transformer-overview.md, efficient-transformers.md]. (b) atoms/entities/transformer.md: sources changed from [transformer-overview.md] to [transformer-overview.md, efficient-transformers.md], with new 'Efficiency Improvements' section added linking to all four efficient methods. (c) atoms/concepts/self-attention-mechanism.md: sources changed from [transformer-overview.md] to [transformer-overview.md, efficient-transformers.md], with related links to linformer, reformer, performer, flash-attention."
+    },
+    {
+      "id": 4,
+      "assertion": "对于 O(n^2) 复杂度是否为瓶颈的矛盾，至少有一个 atom 包含 CONTRADICTION 块",
+      "pass": true,
+      "evidence": "Two atoms contain CONTRADICTION blocks: (a) atoms/facts/self-attention-o2-complexity.md has '> **CONTRADICTION** (added 2026-04-22)' block. (b) atoms/synthesis/on2-not-always-bottleneck.md has '> **CONTRADICTION** (added 2026-04-21)' block. Both address the conflict between 'O(n^2) is a major bottleneck' (from transformer-overview.md) and 'O(n^2) is not always a bottleneck' (from efficient-transformers.md)."
+    },
+    {
+      "id": 5,
+      "assertion": "CONTRADICTION 块包含双方主张和 Resolution 状态",
+      "pass": true,
+      "evidence": "Both CONTRADICTION blocks contain all required elements: (a) self-attention-o2-complexity.md: States this atom's claim ('O(n^2) 复杂度使得 Transformer 在处理长序列时效率显著降低，是主要局限性之一'), states the opposing claim from efficient-transformers-comparison and on2-not-always-bottleneck ('并非总是瓶颈，对于常见序列长度标准注意力计算速度通常足够'), and Resolution: 'both valid in different contexts -- O(n^2) 确实是超长序列（10K+ tokens）的瓶颈，但对于常见长度（512-4096），IO 优化比降低复杂度更有效'. (b) on2-not-always-bottleneck.md: States [[self-attention-complexity]]'s claim, states this source's claim, and Resolution: 'both valid in different contexts -- O(n^2) 确实是长序列（10K+）的瓶颈，但对于常见长度（512-4096），IO 才是实际瓶颈'. Note: minor inconsistency -- on2-not-always-bottleneck.md references [[self-attention-complexity]] but the actual file is self-attention-o2-complexity.md."
+    },
+    {
+      "id": 6,
+      "assertion": "创建了 comparison 类型的 atom（四种高效方法的对比）",
+      "pass": true,
+      "evidence": "File atoms/comparisons/efficient-transformers-comparison.md exists with type: comparison in frontmatter. Contains a comparison table of all four methods (Linformer, Reformer, Performer, Flash Attention) with columns for complexity, precision, advantages, and disadvantages. Also includes a synthesis categorizing them into 'approximate methods' vs 'IO optimization methods'."
+    },
+    {
+      "id": 7,
+      "assertion": "index.md 反映所有新增和更新的 atom，log.md 包含本次 atomize 操作的条目",
+      "pass": false,
+      "evidence": "log.md: PASS -- Contains entry '## [2026-04-22] atomize | Efficient Transformers: 长序列处理的改进方案' listing source, atoms created (4 concepts), atoms updated (5 files including self-attention-o2-complexity.md, transformer.md, self-attention-mechanism.md, efficient-transformers-comparison.md, on2-not-always-bottleneck.md), and contradictions noted. index.md: FAIL -- Missing the efficient-transformers-comparison.md entry in the Comparisons section. The index lists transformer-vs-rnn.md and self-attention-vs-rnn-long-range.md under Comparisons, but does NOT include efficient-transformers-comparison.md despite it being created/updated with type: comparison. All other new atoms (4 concepts, 1 synthesis) and updated atoms (self-attention-o2-complexity.md with updated sources) ARE correctly reflected in index.md.",
+      "partial_details": {
+        "log_md": "pass",
+        "index_md": "fail -- missing efficient-transformers-comparison.md in Comparisons section"
+      }
+    }
+  ],
+  "summary": {
+    "total_assertions": 7,
+    "passed": 6,
+    "failed": 1,
+    "pass_rate": "6/7 (85.7%)",
+    "overall": "PASS_WITH_MINOR_ISSUES",
+    "strengths": [
+      "Document correctly copied to raw/ directory",
+      "All four new concept atoms (Linformer, Reformer, Performer, Flash Attention) properly created with correct frontmatter",
+      "Existing atoms correctly updated with new source references (self-attention-o2-complexity.md, transformer.md, self-attention-mechanism.md)",
+      "CONTRADICTION blocks properly created in both self-attention-o2-complexity.md and on2-not-always-bottleneck.md with both claims and Resolution status",
+      "Comparison atom created with all four methods and classification into approximate vs IO optimization categories",
+      "log.md correctly records the atomize operation with details about created/updated atoms and contradictions",
+      "New synthesis atom (on2-not-always-bottleneck.md) created to capture the nuanced view from the second document",
+      "Entity atom (transformer.md) enhanced with 'Efficiency Improvements' section linking all new efficient methods"
+    ],
+    "issues": [
+      {
+        "severity": "medium",
+        "assertion": 7,
+        "description": "index.md is missing the efficient-transformers-comparison.md entry in the Comparisons section. The comparison atom exists and was updated, but the index table was not updated to include it."
+      },
+      {
+        "severity": "low",
+        "assertion": 5,
+        "description": "Minor inconsistency: on2-not-always-bottleneck.md CONTRADICTION block references [[self-attention-complexity]] but the actual file is named self-attention-o2-complexity.md."
+      },
+      {
+        "severity": "low",
+        "assertion": 5,
+        "description": "Date inconsistency in on2-not-always-bottleneck.md CONTRADICTION block: marked as 'added 2026-04-21' but this should be 2026-04-22 (the date of the current atomize operation). The self-attention-o2-complexity.md correctly shows 'added 2026-04-22'."
+      }
+    ]
+  }
+}

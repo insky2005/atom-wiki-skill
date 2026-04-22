@@ -1,0 +1,6 @@
+{
+  "eval_id": 3,
+  "eval_name": "atomize-efficient",
+  "prompt": "在已有的知识库（/tmp/atom-wiki-eval-1/）基础上，处理第二篇文档 efficient-transformers.md。注意这篇文档与第一篇有重叠和矛盾之处——第一篇说 O(n^2) 复杂度是主要局限，而第二篇指出对于常见序列长度这并非瓶颈。请按照 atom-wiki 协议处理，特别注意矛盾标记。源文件路径: /Users/loie/c/work.ai/wiki/wiki-qoder/skills/atom-wiki/evals/files/efficient-transformers.md",
+  "assertions": []
+}

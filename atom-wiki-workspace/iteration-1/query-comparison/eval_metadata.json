@@ -1,0 +1,6 @@
+{
+  "eval_id": 2,
+  "eval_name": "query-comparison",
+  "prompt": "基于上一轮已经构建的知识库（/tmp/atom-wiki-eval-1/），回答问题：自注意力机制和循环神经网络在处理长距离依赖时各有什么优劣势？",
+  "assertions": []
+}
