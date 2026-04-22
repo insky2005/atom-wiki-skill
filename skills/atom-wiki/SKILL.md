@@ -86,6 +86,7 @@ The AGENTS.md file is the persistent entry point: any AI agent opening this proj
 
 **Steps** (full protocol: [references/atomize.md](references/atomize.md)):
 
+0. **Save Source** — If user uploaded/pasted a document, save it to `raw/` FIRST. Do NOT proceed until the source is saved.
 1. **Read & Comprehend** — Read the source, detect language, identify atomic candidates (5-15 per source typically)
 2. **Classify & Plan** — Assign type to each candidate, present summary to user
 3. **Create Atoms** — Write atom files with frontmatter, body, cross-references

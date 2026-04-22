@@ -35,10 +35,11 @@ The wiki supports three operations. For all of them, invoke the `atom-wiki` skil
 
 ### 1. Atomize — Process Documents
 
-When the user provides a document and asks to process it, ingest it, or add it to the knowledge base:
+When the user provides a document (uploaded file, pasted text, URL, or file path) and asks to process it, ingest it, or add it to the knowledge base:
 
 1. Load the `atom-wiki` skill
-2. Follow the skill's atomize protocol: read the source, extract atomic knowledge units, classify them, write atom files with frontmatter, cross-reference with existing atoms, flag contradictions, update index and log
+2. **FIRST: Save the source document to `raw/` directory** — this is mandatory. If the user uploaded a file, copy it to `raw/`. If they pasted text, save it as `{topic}-{date}.md` in `raw/`. Do NOT proceed with atomization until the source is saved.
+3. Follow the skill's atomize protocol: read the source, extract atomic knowledge units, classify them, write atom files with frontmatter, cross-reference with existing atoms, flag contradictions, update index and log
 
 Example user prompts: "处理这个文档", "atomize this article", "add to wiki"
 

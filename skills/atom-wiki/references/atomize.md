@@ -6,9 +6,20 @@ Detailed protocol for ingesting a new source and breaking it into atomic knowled
 
 User provides a document (file path, pasted text, or URL) and asks to process, ingest, atomize, or add it to the knowledge base. Phrases: "处理这个文档", "整理这篇文章", "atomize this", "ingest", "add to wiki", "拆分这个文档", "归类".
 
+## Step 0: Save Source to raw/ — FIRST
+
+**Before anything else, ensure the source document is saved to `raw/`.** This is the source of truth — all atoms are derived from it.
+
+- **User uploaded a file**: Copy/move it to `raw/{filename}`. If the file is not already in the wiki's `raw/` directory, save it there first.
+- **User pasted text**: Save it as a markdown file. Generate a descriptive filename (e.g. `{topic}-notes-{date}.md`). Write it to `raw/{filename}`.
+- **User provided a file path**: Verify the file exists. If it's outside the wiki's `raw/` directory, copy it to `raw/{filename}`.
+- **User provided a URL**: Fetch the content, convert to markdown, and save to `raw/{slug}.md`.
+
+**Do not proceed with atomization until the source is saved to `raw/`.** The `raw/` directory is the immutable source of truth — all future atoms reference it by filename.
+
 ## Pre-flight Checks
 
-1. Verify the source exists and is readable
+1. Verify the source exists in `raw/` and is readable
 2. Determine file type:
    | Type | Action |
    |------|--------|
