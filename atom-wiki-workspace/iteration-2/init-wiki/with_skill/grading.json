@@ -1,0 +1,65 @@
+{
+  "eval_id": 4,
+  "eval_name": "init-wiki",
+  "mode": "with_skill",
+  "overall_pass": true,
+  "assertions": [
+    {
+      "name": "wiki-root-directory",
+      "text": "在 /tmp/atom-wiki-init-eval/ 下创建了 wiki 目录结构",
+      "pass": true,
+      "evidence": "outputs/ 目录下存在 wiki/ 目录，包含 atoms/、raw/、index.md、log.md，符合预期的 wiki 根目录结构。"
+    },
+    {
+      "name": "raw-directory-exists",
+      "text": "raw/ 目录存在",
+      "pass": true,
+      "evidence": "wiki/raw/ 目录存在，且包含 assets/ 子目录。"
+    },
+    {
+      "name": "atoms-subdirectories",
+      "text": "atoms/ 下包含 8 个子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）",
+      "pass": true,
+      "evidence": "wiki/atoms/ 下完整包含全部 8 个子目录：entities/、concepts/、facts/、how-to/、cases/、comparisons/、qa/、synthesis/。"
+    },
+    {
+      "name": "index-md-seeded",
+      "text": "index.md 存在且包含所有 type 分区的表头",
+      "pass": true,
+      "evidence": "wiki/index.md 存在，包含全部 8 个 type 分区表头：## Entities、## Concepts、## Facts、## How-to、## Cases、## Comparisons、## Q&A、## Synthesis，每个分区下均有正确的表格格式。"
+    },
+    {
+      "name": "log-md-init-entry",
+      "text": "log.md 存在且包含初始化操作条目",
+      "pass": true,
+      "evidence": "wiki/log.md 存在，包含初始化条目：## [2026-04-22] init，以及 Wiki initialized at /tmp/atom-wiki-init-eval 和 AGENTS.md created at /tmp/AGENTS.md 的记录。"
+    },
+    {
+      "name": "agents-md-created",
+      "text": "在项目根目录创建了 AGENTS.md 文件",
+      "pass": true,
+      "evidence": "outputs/AGENTS.md 存在于项目根目录（与 wiki/ 同级）。"
+    },
+    {
+      "name": "agents-md-contains-wiki-path",
+      "text": "AGENTS.md 中包含了 wiki 的路径信息（/tmp/atom-wiki-init-eval/ 或相对路径）",
+      "pass": true,
+      "evidence": "AGENTS.md 第 9 行包含 wiki 路径：The wiki is located at: `atom-wiki-init-eval/`，为相对路径形式。"
+    },
+    {
+      "name": "agents-md-directs-to-skill",
+      "text": "AGENTS.md 中明确引导使用 atom-wiki skill",
+      "pass": true,
+      "evidence": "AGENTS.md 多处明确引导使用 atom-wiki skill，包括：第 5 行 'you MUST use the `atom-wiki` skill'，第 34 行 'invoke the `atom-wiki` skill'，以及第 40、49、58、66 行等。"
+    },
+    {
+      "name": "agents-md-lists-directories",
+      "text": "AGENTS.md 中列出了 wiki 的目录结构（raw/、atoms/ 等）",
+      "pass": true,
+      "evidence": "AGENTS.md 第 15-30 行包含完整的目录结构树，列出了 raw/、raw/assets/、atoms/ 及其全部 8 个子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis），以及 index.md 和 log.md。"
+    }
+  ],
+  "score": 9,
+  "total": 9,
+  "notes": "全部 9 项断言均通过。初始化输出完整、规范，AGENTS.md 内容丰富且正确引导使用 atom-wiki skill。唯一轻微不足是 AGENTS.md 中的 wiki 路径写为 `atom-wiki-init-eval/` 而非完整路径 `/tmp/atom-wiki-init-eval/`，但断言允许相对路径形式，故判定为通过。"
+}

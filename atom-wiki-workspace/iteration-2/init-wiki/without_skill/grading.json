@@ -1,0 +1,71 @@
+{
+  "eval_id": 4,
+  "eval_name": "init-wiki",
+  "variant": "without_skill",
+  "assertions": [
+    {
+      "id": 1,
+      "text": "在 /tmp/atom-wiki-init-eval/ 下创建了 wiki 目录结构",
+      "pass": true,
+      "notes": "wiki/ 目录已创建，包含 atoms/, index/, sources/, index.md, log.md 等完整结构。注意：路径使用了 /tmp/atom-wiki-init-eval-noskill/ 而非 prompt 中的 /tmp/atom-wiki-init-eval/，但目录结构本身是正确的。"
+    },
+    {
+      "id": 2,
+      "text": "raw/ 目录存在",
+      "pass": false,
+      "notes": "raw/ 目录不存在。实际创建的是 sources/ 目录而非 raw/ 目录。这是 atom-wiki skill 规范中要求的原始文档存放目录名称。"
+    },
+    {
+      "id": 3,
+      "text": "atoms/ 下包含 8 个子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）",
+      "pass": true,
+      "notes": "8 个子目录全部存在：entities, concepts, facts, how-to, cases, comparisons, qa, synthesis。每个目录下都有 .gitkeep 占位文件。"
+    },
+    {
+      "id": 4,
+      "text": "index.md 存在且包含所有 type 分区的表头",
+      "pass": true,
+      "notes": "index.md 存在，在「原子单元类型说明」表格中包含了所有 8 种类型的表头：Entities, Concepts, Facts, How-to, Cases, Comparisons, QA, Synthesis。"
+    },
+    {
+      "id": 5,
+      "text": "log.md 存在且包含初始化操作条目",
+      "pass": true,
+      "notes": "log.md 存在，包含 2026-04-22 的初始化操作条目，列出了创建目录结构、定义分类体系、建立命名规范、创建索引文件等操作。"
+    },
+    {
+      "id": 6,
+      "text": "在项目根目录创建了 AGENTS.md 文件",
+      "pass": true,
+      "notes": "AGENTS.md 存在于 outputs/ 根目录下（与 wiki/ 同级），内容完整。"
+    },
+    {
+      "id": 7,
+      "text": "AGENTS.md 中包含了 wiki 的路径信息（/tmp/atom-wiki-init-eval/ 或相对路径）",
+      "pass": true,
+      "notes": "AGENTS.md 第 5 行和第 10 行包含了路径 `/tmp/atom-wiki-init-eval-noskill/`。虽然路径名与 prompt 中的 /tmp/atom-wiki-init-eval/ 略有不同（多了 -noskill 后缀），但确实包含了 wiki 的路径信息。"
+    },
+    {
+      "id": 8,
+      "text": "AGENTS.md 中明确引导使用 atom-wiki skill",
+      "pass": false,
+      "notes": "AGENTS.md 中没有提及 'atom-wiki skill' 或任何 skill 引用。文件描述了 Agent 工作流程（Ingest/Query/Update），但没有引导 AI Agent 使用 atom-wiki skill。这与 'without_skill' 变种一致——模型不知道 skill 的存在。"
+    },
+    {
+      "id": 9,
+      "text": "AGENTS.md 中列出了 wiki 的目录结构（raw/、atoms/ 等）",
+      "pass": true,
+      "notes": "AGENTS.md 第 9-25 行以树形结构列出了完整的目录结构，包括 sources/, atoms/ 及其 8 个子目录, index/, index.md, log.md。注意：使用的是 sources/ 而非 raw/，但目录结构描述是完整的。"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 7,
+    "failed": 2,
+    "score": 0.78,
+    "failed_assertions": [
+      "Assertion 2: raw/ 目录不存在，模型创建的是 sources/ 目录",
+      "Assertion 8: AGENTS.md 中没有引导使用 atom-wiki skill（符合 without_skill 变种的预期行为）"
+    ]
+  }
+}

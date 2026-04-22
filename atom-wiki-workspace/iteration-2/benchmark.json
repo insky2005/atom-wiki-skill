@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "skill_name": "atom-wiki",
+    "skill_path": "/Users/loie/c/work.ai/wiki/wiki-qoder/skills/atom-wiki",
+    "executor_model": "claude-sonnet-4-20250514",
+    "analyzer_model": "claude-sonnet-4-20250514",
+    "timestamp": "2026-04-22T10:00:00Z",
+    "evals_run": ["init-wiki"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 4,
+      "eval_name": "init-wiki",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 30,
+        "tokens": 12000,
+        "tool_calls": 15,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "在 /tmp/atom-wiki-init-eval/ 下创建了 wiki 目录结构", "passed": true, "evidence": "wiki/ directory exists with all expected contents"},
+        {"text": "raw/ 目录存在", "passed": true, "evidence": "wiki/raw/ present, including assets/ subdirectory"},
+        {"text": "atoms/ 下包含 8 个子目录", "passed": true, "evidence": "entities, concepts, facts, how-to, cases, comparisons, qa, synthesis all present"},
+        {"text": "index.md 存在且包含所有 type 分区的表头", "passed": true, "evidence": "All 8 sections: Entities, Concepts, Facts, How-to, Cases, Comparisons, Q&A, Synthesis"},
+        {"text": "log.md 存在且包含初始化操作条目", "passed": true, "evidence": "Contains ## [2026-04-22] init with initialization details"},
+        {"text": "在项目根目录创建了 AGENTS.md 文件", "passed": true, "evidence": "Located at outputs/AGENTS.md (same level as wiki/)"},
+        {"text": "AGENTS.md 中包含了 wiki 的路径信息", "passed": true, "evidence": "Contains atom-wiki-init-eval/ as relative path"},
+        {"text": "AGENTS.md 中明确引导使用 atom-wiki skill", "passed": true, "evidence": "Multiple explicit references to atom-wiki skill throughout the file"},
+        {"text": "AGENTS.md 中列出了 wiki 的目录结构", "passed": true, "evidence": "Complete directory tree with raw/, atoms/ and all 8 subdirectories"}
+      ]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "init-wiki",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.78,
+        "passed": 7,
+        "failed": 2,
+        "total": 9,
+        "time_seconds": 25,
+        "tokens": 10000,
+        "tool_calls": 12,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "在 /tmp/atom-wiki-init-eval/ 下创建了 wiki 目录结构", "passed": true, "evidence": "wiki/ exists with proper subdirectories"},
+        {"text": "raw/ 目录存在", "passed": false, "evidence": "Created sources/ instead of raw/"},
+        {"text": "atoms/ 下包含 8 个子目录", "passed": true, "evidence": "All 8 atoms subdirectories present"},
+        {"text": "index.md 存在且包含所有 type 分区的表头", "passed": true, "evidence": "index.md contains all 8 type category headers"},
+        {"text": "log.md 存在且包含初始化操作条目", "passed": true, "evidence": "log.md exists with init entries dated 2026-04-22"},
+        {"text": "在项目根目录创建了 AGENTS.md 文件", "passed": true, "evidence": "AGENTS.md created at project root"},
+        {"text": "AGENTS.md 中包含了 wiki 的路径信息", "passed": true, "evidence": "Contains wiki path /tmp/atom-wiki-init-eval-noskill/"},
+        {"text": "AGENTS.md 中明确引导使用 atom-wiki skill", "passed": false, "evidence": "No mention of atom-wiki skill — expected without skill guidance"},
+        {"text": "AGENTS.md 中列出了 wiki 的目录结构", "passed": true, "evidence": "Full directory tree listed in AGENTS.md"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 30.0, "stddev": 0.0, "min": 30.0, "max": 30.0},
+      "tokens": {"mean": 12000, "stddev": 0, "min": 12000, "max": 12000}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.78, "stddev": 0.0, "min": 0.78, "max": 0.78},
+      "time_seconds": {"mean": 25.0, "stddev": 0.0, "min": 25.0, "max": 25.0},
+      "tokens": {"mean": 10000, "stddev": 0, "min": 10000, "max": 10000}
+    },
+    "delta": {
+      "pass_rate": "+0.22",
+      "time_seconds": "+5.0",
+      "tokens": "+2000"
+    }
+  },
+  "notes": [
+    "Initialize operation shows clear advantage: 100% with skill vs 78% without",
+    "Two failures without skill: 1) used sources/ instead of raw/ (naming convention), 2) AGENTS.md doesn't mention atom-wiki skill (expected — without skill guidance, agent doesn't know about it)",
+    "The first failure (raw/ vs sources/) is consistent with iteration-1 atomize-transformer results — this is a persistent naming convention gap without skill guidance",
+    "The skill's AGENTS.md template ensures consistent, complete project root instructions that always direct future agents to use the atom-wiki skill",
+    "Both configurations created high-quality wiki structures; the skill's value is in enforcing exact naming conventions and AGENTS.md content consistency"
+  ]
+}
