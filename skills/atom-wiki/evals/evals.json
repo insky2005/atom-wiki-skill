@@ -1,0 +1,117 @@
+{
+  "skill_name": "atom-wiki",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "请阅读 transformer-overview.md 这篇文档，将其原子化拆分到知识库中。在 /tmp/atom-wiki-eval-1/ 目录下创建完整的 wiki 目录结构（包括 raw/, atoms/ 各子目录, index.md, log.md），把源文件复制到 raw/ 目录，然后按照 atom-wiki 的协议拆分为原子化知识单元。",
+      "expected_output": "在 /tmp/atom-wiki-eval-1/ 下创建完整的 wiki 目录结构，将中文文档拆分为多个原子化知识单元（entity/concept/fact 等），每个 atom 有 YAML frontmatter、自包含内容、tags 和 related 链接，index.md 和 log.md 正确更新",
+      "files": ["evals/files/transformer-overview.md"],
+      "assertions": [
+        {
+          "name": "wiki-directory-structure",
+          "text": "创建了完整的 wiki 目录结构，包含 raw/、atoms/ 及其子目录（entities、concepts、facts、how-to、cases、comparisons、qa、synthesis）"
+        },
+        {
+          "name": "source-file-copied",
+          "text": "源文件被复制到 raw/ 目录"
+        },
+        {
+          "name": "minimum-atom-count",
+          "text": "至少创建了 8 个原子化知识单元文件（.md）"
+        },
+        {
+          "name": "yaml-frontmatter-complete",
+          "text": "每个 atom 文件包含完整的 YAML frontmatter（title、type、created、updated、sources、tags、related）"
+        },
+        {
+          "name": "language-consistency",
+          "text": "atom 内容为中文（跟随源文档语言），而 YAML 键和 type 值为英文"
+        },
+        {
+          "name": "concept-atoms-created",
+          "text": "存在 concept 类型的 atom（如 self-attention、multi-head-attention、positional-encoding 等概念）"
+        },
+        {
+          "name": "entity-atoms-created",
+          "text": "存在 entity 类型的 atom（如 Transformer、BERT、GPT 等实体）"
+        },
+        {
+          "name": "index-md-populated",
+          "text": "index.md 按 type 分区列出所有 atom，使用表格格式"
+        },
+        {
+          "name": "log-md-recorded",
+          "text": "log.md 包含本次 atomize 操作的条目，格式为 ## [date] atomize | {title}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "基于上一轮已经构建的知识库（/tmp/atom-wiki-eval-1/），回答问题：自注意力机制和循环神经网络在处理长距离依赖时各有什么优劣势？",
+      "expected_output": "从知识库中检索相关 atom，综合自注意力和 RNN 的对比信息，给出带引用的结构化回答，并将有价值的分析回存为新的 comparison atom",
+      "files": [],
+      "assertions": [
+        {
+          "name": "answer-cites-atoms",
+          "text": "回答中引用了知识库中的 atom（通过文件路径或标题引用）"
+        },
+        {
+          "name": "covers-self-attention-advantage",
+          "text": "回答包含自注意力机制的优势（如并行计算、直接关注远距离位置）"
+        },
+        {
+          "name": "covers-rnn-disadvantage",
+          "text": "回答包含循环神经网络的劣势（如梯度消失、串行计算）"
+        },
+        {
+          "name": "confidence-indicated",
+          "text": "回答包含置信度说明（如 high/medium/low confidence）"
+        },
+        {
+          "name": "answer-filed-as-atom",
+          "text": "有价值的分析被回存为新的 atom，type 为 comparison 或 synthesis"
+        },
+        {
+          "name": "index-log-updated",
+          "text": "如果创建了新 atom，index.md 和 log.md 相应更新"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "在已有的知识库（/tmp/atom-wiki-eval-1/）基础上，处理第二篇文档 efficient-transformers.md。注意这篇文档与第一篇有重叠和矛盾之处——第一篇说 O(n^2) 复杂度是主要局限，而第二篇指出对于常见序列长度这并非瓶颈。请按照 atom-wiki 协议处理，特别注意矛盾标记。源文件路径: /Users/loie/c/work.ai/wiki/wiki-qoder/skills/atom-wiki/evals/files/efficient-transformers.md",
+      "expected_output": "将第二篇文档原子化整合到已有知识库中，更新已有 atom（添加新信息），为矛盾之处添加 CONTRADICTION 块，创建新的 atom（如 Linformer, Reformer 等方法），更新 index.md 和 log.md",
+      "files": ["evals/files/efficient-transformers.md"],
+      "assertions": [
+        {
+          "name": "source-copied-to-raw",
+          "text": "第二篇文档被复制到 raw/ 目录"
+        },
+        {
+          "name": "new-method-atoms-created",
+          "text": "创建了关于 Linformer、Reformer、Performer、Flash Attention 的新 atom"
+        },
+        {
+          "name": "existing-atoms-updated",
+          "text": "已有的 atom 被更新（sources 字段包含新源文件）"
+        },
+        {
+          "name": "contradiction-flagged",
+          "text": "对于 O(n^2) 复杂度是否为瓶颈的矛盾，至少有一个 atom 包含 CONTRADICTION 块"
+        },
+        {
+          "name": "contradiction-format",
+          "text": "CONTRADICTION 块包含双方主张和 Resolution 状态"
+        },
+        {
+          "name": "comparison-atom-created",
+          "text": "创建了 comparison 类型的 atom（四种高效方法的对比）"
+        },
+        {
+          "name": "index-log-updated",
+          "text": "index.md 反映所有新增和更新的 atom，log.md 包含本次 atomize 操作的条目"
+        }
+      ]
+    }
+  ]
+}
