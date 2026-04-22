@@ -77,6 +77,7 @@ related: [[other-atom]], [[another-atom]]
 2. **Create directory structure** — raw/, atoms/ (8 subdirectories), index.md, log.md
 3. **Create AGENTS.md** — At project root, with wiki path, structure, and explicit instruction to always use the atom-wiki skill
 4. **Seed index.md and log.md** — Empty index template, initialization log entry
+5. **Initialize git repository** — `git init`, create `.gitignore`, stage all files, create initial commit (local only, no push)
 
 The AGENTS.md file is the persistent entry point: any AI agent opening this project will read it and know to load the atom-wiki skill for all wiki operations.
 

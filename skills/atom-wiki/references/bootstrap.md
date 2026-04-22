@@ -203,7 +203,21 @@ Thumbs.db
 !*.md
 ```
 
-## Step 6: Summary
+## Step 6: Git Repository Initialization
+
+**Always initialize a git repository at the wiki root if one does not already exist.**
+
+After all files and directories have been created:
+
+1. **Check if git is already initialized** — Run `git -C {wiki-root} rev-parse --git-dir 2>/dev/null`. If it returns successfully, skip to Step 6.3.
+2. **Initialize git repository** — Run `git init` at the wiki root directory
+3. **Create .gitignore if not exists** — If `.gitignore` was not created in Step 5 (because it's not a git repo yet), create it now at `{wiki-root}/.gitignore` with the content from Step 5
+4. **Stage all files** — Run `git add -A` to stage all wiki files
+5. **Create initial commit** — Run `git commit -m "init: initialize atom-wiki knowledge base"` with `--no-verify` flag to skip hooks
+
+> **Important**: This commit is only to the local repository. Do NOT push to any remote. The user will decide when and where to push.
+
+## Step 7: Summary
 
 Output a brief summary:
 
