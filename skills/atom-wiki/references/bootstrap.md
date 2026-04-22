@@ -10,9 +10,10 @@ Also triggers automatically when the first atomize operation is requested but no
 
 ## Step 1: Determine Wiki Root Directory
 
-1. **If user specifies a directory path**: Use that path as the wiki root. If it doesn't exist, create it.
-2. **If no directory specified**: Use the current working directory as the wiki root.
-3. **Confirm with user**: "I'll create the wiki structure at `{wiki-root}`. Correct?"
+**Always create `wiki/` as a subdirectory in the current working directory.**
+
+- Wiki root: `./wiki/`
+- AGENTS.md: `./AGENTS.md` (same level as the `wiki/` folder)
 
 Store the wiki root path for all subsequent operations. This path is used to locate the wiki's `atoms/`, `index.md`, `log.md`, and to create the `AGENTS.md` file.
 
@@ -94,9 +95,14 @@ Create `wiki/log.md` with the initialization entry:
 
 ## Step 4: Create AGENTS.md
 
-Create `AGENTS.md` at the **project root** (the parent of the wiki root, or the wiki root itself if no parent project exists). This file serves as the persistent instruction file for any AI agent that opens this project.
+Create `AGENTS.md` at the current working directory, alongside the `wiki/` folder.
 
-**Use this exact template. Only replace the three placeholders in backticks. Do NOT modify anything else.**
+- Wiki root: `./wiki/`
+- AGENTS.md: `./AGENTS.md`
+
+This file serves as the persistent instruction for any AI agent that opens the project — it lives alongside the wiki folder, never inside it.
+
+**Use this exact template. Only replace the two placeholders in backticks. Do NOT modify anything else.**
 
 ````markdown
 # Project AI Agent Instructions
@@ -107,14 +113,14 @@ This project contains an atomized knowledge base managed by the **atom-wiki** sk
 
 ## Knowledge Base Location
 
-The wiki is located at: `{WIKI_ROOT}`
+The wiki is located at: `wiki/`
 
 All paths below are relative to this directory.
 
 ## Directory Structure
 
 ```
-{WIKI_ROOT}/
+wiki/
 ├── raw/                  # Immutable source documents (read-only)
 │   └── assets/           # Images and attachments
 ├── atoms/                # Atomic knowledge units
@@ -176,8 +182,7 @@ Wiki initialized on: `{DATE}`
 {WIKI_DESCRIPTION}
 ````
 
-Replace only these three placeholders:
-- `{WIKI_ROOT}` → The wiki root directory path (relative to AGENTS.md location)
+Replace only these two placeholders:
 - `{DATE}` → Current date in YYYY-MM-DD
 - `{WIKI_DESCRIPTION}` → Brief description of what this wiki is about (from user input or inferred from domain)
 

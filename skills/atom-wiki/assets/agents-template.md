@@ -6,14 +6,14 @@ This project contains an atomized knowledge base managed by the **atom-wiki** sk
 
 ## Knowledge Base Location
 
-The wiki is located at: `{WIKI_ROOT}`
+The wiki is located at: `wiki/`
 
 All paths below are relative to this directory.
 
 ## Directory Structure
 
 ```
-{WIKI_ROOT}/
+wiki/
 ├── raw/                  # Immutable source documents (read-only)
 │   └── assets/           # Images and attachments
 ├── atoms/                # Atomic knowledge units
@@ -73,3 +73,5 @@ Example user prompts: "lint wiki", "检查知识库", "review wiki"
 Wiki initialized on: `{DATE}`
 
 {WIKI_DESCRIPTION}
+
+<!-- Placeholders: {DATE}, {WIKI_DESCRIPTION} -->
